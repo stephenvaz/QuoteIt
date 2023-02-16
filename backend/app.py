@@ -40,12 +40,15 @@ def predict():
             i +=1
             continue
         id = quote[0]
-        quote_from_id = df[df['id'] == id]['quote'].values[0]
-        print(quote_from_id)
-        if(i == 6):
-            break
-        i += 1
-        return_list.append(quote_from_id)
+        try:
+            quote_from_id = df[df['id'] == id]['quote'].values[0]
+            print(quote_from_id)
+            if(i == 6):
+                break
+            i += 1
+            return_list.append(quote_from_id)
+        except:
+            pass
         # except:
         #     pass
     
