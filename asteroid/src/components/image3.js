@@ -6,7 +6,7 @@ const Image3 = () => (
     <Parallax className='image' bgImage= {Ast2} strength={800}>
         <div className= "content">
             <Link to='/predict'>
-            <button className='img-btn'>Predict the diameter</button>
+            <button className='img-btn'>Suggest me some good quotes</button>
             </Link>
             
         </div>
