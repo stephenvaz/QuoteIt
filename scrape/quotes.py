@@ -154,9 +154,46 @@ def scuba():
             print(e, "wid: ",wid)
             pass
 
-
+def datasem():
+    b.get("https://datasemantics.co/36-inspirational-quotes-on-big-data-machine-learning-and-artificial-intelligence/")
+    cat = "Big Data"
+    wid = 1
+    w = 13 #+1
+    #12 is edge case
+    while(wid <=11):
+        try:
+            quotex = "/html/body/div[2]/div[5]/div[2]/div[2]/div/div/article/section/div/p["+str(w)+"]"
+            # authx = "/html/body/div[2]/div[5]/div[2]/div[2]/div/div/article/section/div/p["+str(w)+"]/a"
+            quote = b.find_element(By.XPATH, quotex).text
+            #split on -
+            quote = quote.split(" — ")
+            quote = quote.split(" – ")
+            print(quote)
+            # quote = quote[0]
+            # auth = quote[1]
+            # print(quote, auth)
+            w+=1
+            wid+=1
+            # auth = b.find_element(By.XPATH, authx).text
+        except:
+            pass
+def manual():
+    id = 150
+    cat = "AI/ML"
+    while(True):
+        try:
+            quote = input("quote: ")
+            auth = input("auth: ")
+            write = [{"id": id, "quote": quote, "author": auth, "category": cat},]
+            # write.append(write2)
+            df = pd.DataFrame(write)
+            df.to_csv('scrape/data/output/format2.csv', mode='a',index=False, header=False)
+            id+=1
+        except:
+            break
 # kd()
 # alab()
-scuba()
-
+# scuba()
+# datasem()
+manual()
 # time.sleep(100)
