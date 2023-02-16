@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 import time
 import pandas as pd
 options = webdriver.ChromeOptions()
-
+options.add_argument("--headless")
 options.add_argument('--log-level=1')
 # options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36")
 options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36")
@@ -76,17 +76,87 @@ def kd():
 def alab():
     f = open("scrape/data/output/format.csv", "a")
     b.get("https://www.analytixlabs.co.in/blog/40-best-artificial-intelligence-quotes/#Quotes_On_Humans_need_in_AI_evolution")
-    cat = "AI Evolution"
-    qi = 5 #+2
-    ai = 6
-    quotex = "/html/body/div[1]/div/div/div[2]/div/article/div[2]/p["+str(qi)+"]"
-    authx = "/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[6]"
+    cat = "AI/ML"
+    id = 78 #+1
+    # id = 53 #+1
+    # qi = 5 #+2
+    qi = 73 #+2
+    ai = 74
+    while(id<=85):
+        try:
+            quotex = "/html/body/div[1]/div/div/div[2]/div/article/div[2]/p["+str(qi)+"]"
+            #/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[73]
+            authx = "/html/body/div[1]/div/div/div[2]/div/article/div[2]/p["+str(ai)+"]"
+            #/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[55]
+            #/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[74]
+            quote = b.find_element(By.XPATH, quotex).text
+            quote = quote.replace("“", "")
+            quote =  quote.replace("”", "")
+            quote = quote.replace("’", "'")
+            quote = quote.replace("‘", "")
+            auth = b.find_element(By.XPATH, authx).text
+            auth = auth.replace("– ", "")
 
-    #/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[8]
-    #/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[5]sd
-    #/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[7]
+            print(quote, auth)
+            qi+=2
+            ai+=2
+            id+=1
+            write = [{"id": id, "quote": quote, "author": auth, "category": cat},]
+            # write.append(write2)
+            df = pd.DataFrame(write)
+            df.to_csv('scrape/data/output/format2.csv', mode='a',index=False, header=False)
+        except Exception as e:
+            print("error at index qi=", qi, "ai=",ai)
+            print(e)
+            cn = input("y/n")
+            if(cn == 'y'):
+                qi+=2
+                ai+=2
+                id+=1
+                pass
+            else:
+                break
 
-kd()
+def scuba():
+    b.get("https://www.scuba.io/blog/48-analytics-quotes-experts")
+    cat = "Analytics"
+    auti = 1 #+1
+    quoti = 9
+    id = 87 
+    wid = 1
+    while (wid <=50):
+        try:
+            authx = '/html/body/div[3]/div/div[1]/div[2]/div/span/h3['+str(auti)+']/a'
+            #/html/body/div[3]/div/div[1]/div[2]/div/span/h3[2]/a
+            quotex = '/html/body/div[3]/div/div[1]/div[2]/div/span/p['+str(quoti)+']'
+            #/html/body/div[3]/div/div[1]/div[2]/div/span/p[10]
+            auth = b.find_element(By.XPATH, authx).text
+            quote = b.find_element(By.XPATH, quotex).text
+            quote = b.find_element(By.XPATH, quotex).text
+            quote = quote.replace("“", "")
+            quote =  quote.replace("”", "")
+            quote = quote.replace("’", "'")
+            quote = quote.replace("‘", "")
+            auth = b.find_element(By.XPATH, authx).text
+            auth = auth.replace("– ", "")
+            auth = auth.split(",")[0]
+
+            print(quote, auth)
+            auti+=1
+            quoti+=1
+            id+=1
+            wid+=1
+            write = [{"id": id, "quote": quote, "author": auth, "category": cat},]
+            # write.append(write2)
+            df = pd.DataFrame(write)
+            df.to_csv('scrape/data/output/format2.csv', mode='a',index=False, header=False)
+        except Exception as e:
+            print(e, "wid: ",wid)
+            pass
 
 
-time.sleep(100)
+# kd()
+# alab()
+scuba()
+
+# time.sleep(100)
