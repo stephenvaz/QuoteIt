@@ -1,4 +1,4 @@
-id, quote, author, category
+id,quote,author,category
 23,"Being a data scientist is not only about data crunching. It's about understanding the business challenge, creating some valuable actionable insights to the data, and communicating their findings to the business.",Jean-Paul Isson,Data Science
 24,"Without a grounding in statistics, a Data Scientist is a Data Lab Assistant.",Martyn Jones,Data Science
 25,"Having skills in statistics, math, and programming is certainly necessary to be a great analytic professional, but they are not sufficient to make a person a great analytic professional.",Bill Franks,Data Science
