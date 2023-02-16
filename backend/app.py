@@ -17,6 +17,7 @@ def home():
     return "<h1>Server is live</h1>"
 
 @app.route('/predict',methods=['POST'])
+# @crossdomain(origin='*')
 def predict():
     print('hello')
     try:
@@ -41,7 +42,6 @@ def predict():
         id = quote[0]
         quote_from_id = df[df['id'] == id]['quote'].values[0]
         print(quote_from_id)
-        
         if(i == 6):
             break
         i += 1
