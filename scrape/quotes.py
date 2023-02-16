@@ -6,7 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 # from selenium.webdriver.support.ui import Select
 import time
-
+import pandas as pd
 options = webdriver.ChromeOptions()
 
 options.add_argument('--log-level=1')
@@ -20,19 +20,22 @@ options.add_argument("--disable-blink-features=AutomationControlled")
 b = webdriver.Chrome( options=options)
 
 def kd():
-    f = open("scrape/data/output/format.csv", "a")
-    b.get("https://www.kdnuggets.com/2017/05/42-essential-quotes-data-science-thought-leaders.html/2")
+    f = open("scrape/data/output/format2.csv", "a")
+    b.get("https://www.kdnuggets.com/2017/05/42-essential-quotes-data-science-thought-leaders.html")
     i = 1
-    j = 1
-    id = 23
+    j = 5
+    id = 1
+    write = []
     while(True):
         try:
-            xpathq =  '/html/body/div[1]/div[1]/div[3]/div[2]/div[3]/ol['+str(i)+']/li'
+            xpathq =  '/html/body/div[1]/div[1]/div[3]/div[2]/div[2]/ol['+str(i)+']/li'
                     #/html/body/div[1]/div[1]/div[3]/div[2]/div[3]/ol[1]/li
-
+            #p1
+            #/html/body/div[1]/div[1]/div[3]/div[2]/div[2]/ol[1]
+            #/html/body/div[1]/div[1]/div[3]/div[2]/div[2]/ol[2]
             quote = b.find_element(By.XPATH, xpathq).text
                                             #/html/body/div[1]/div[1]/div[3]/div[2]/div[2]/ol[2]/li
-            auth = b.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[3]/div[2]/div[3]/p["+str(j)+"]/a/em").text
+            auth = b.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[3]/div[2]/div[2]/p["+str(j)+"]/a/em").text
                                             #/html/body/div[1]/div[1]/div[3]/div[2]/div[3]/p[1]/a
                                             #/html/body/div[1]/div[1]/div[3]/div[2]/div[3]/p[1]/a
                                             #/html/body/div[1]/div[1]/div[3]/div[2]/div[2]/p[7]/a
@@ -40,14 +43,22 @@ def kd():
                                             #/html/body/div[1]/div[1]/div[3]/div[2]/div[3]/p[3]/a/em
                                             #/html/body/div[1]/div[1]/div[3]/div[2]/div[2]/p[32]/a/
                                             #/html/body/div[1]/div[1]/div[3]/div[2]/div[2]/p[5]/a
+                                            #p1
+                                            #/html/body/div[1]/div[1]/div[3]/div[2]/div[2]/p[5]/a
+                                            #/html/body/div[1]/div[1]/div[3]/div[2]/div[2]/p[7]/a
             quote = quote.replace("“", "")
             quote =  quote.replace("”", "")
             quote = quote.replace("’", "'")
             quote = quote.replace("‘", "")
+
             print(quote, auth)
             i+=1
             j+=2
-            f.write(f'\n{id}, "{quote}", {auth}, Data Science,')
+            # f.write(f'\n{id}, "{quote}", {auth}, Data Science,')
+            write = [{"id": id, "quote": quote, "author": auth, "category": "Data Science"},]
+            # write.append(write2)
+            df = pd.DataFrame(write)
+            df.to_csv('scrape/data/output/format2.csv', mode='a',index=False, header=False)
             id+=1
 
         except:
@@ -59,6 +70,7 @@ def kd():
                 id+=1
                 pass
             else:
+               
                 break
 
 def alab():
@@ -74,7 +86,7 @@ def alab():
     #/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[5]sd
     #/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[7]
 
-# kd()
+kd()
 
 
 time.sleep(100)
