@@ -61,7 +61,20 @@ def kd():
             else:
                 break
 
+def alab():
+    f = open("scrape/data/output/format.csv", "a")
+    b.get("https://www.analytixlabs.co.in/blog/40-best-artificial-intelligence-quotes/#Quotes_On_Humans_need_in_AI_evolution")
+    cat = "AI Evolution"
+    qi = 5 #+2
+    ai = 6
+    quotex = "/html/body/div[1]/div/div/div[2]/div/article/div[2]/p["+str(qi)+"]"
+    authx = "/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[6]"
 
-kd()
+    #/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[8]
+    #/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[5]sd
+    #/html/body/div[1]/div/div/div[2]/div/article/div[2]/p[7]
+
+# kd()
+
 
 time.sleep(100)
